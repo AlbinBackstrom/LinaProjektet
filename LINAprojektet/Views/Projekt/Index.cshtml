@@ -1,0 +1,21 @@
+﻿@model IEnumerable<LINAprojektet.Projekt>
+
+
+    <h3>Alla projekt</h3>
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-5 thumbnail testklass" style="position: relative; height: 150px; margin:0 10px 10px 10px;">
+                <h4>@item.Projektnamn</h4>
+               
+                <h5>Skapad av: @item.TillagdAv</h5>
+                <p>@item.Beskrivning</p>
+                <div style="position: absolute; bottom:0; right:0; margin-bottom: 3px; margin-right: 3px;">
+                    @Html.ActionLink("Läs mer", "Details", new { id = item.ID }, new { @class = "btn btn-default" })
+                </div>
+            </div>
+        }
+
+        
+    </div>

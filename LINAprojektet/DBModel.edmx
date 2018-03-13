@@ -1,0 +1,399 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LINAsDatabasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Medfinansiar">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Namn" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MedfinansiarProjekt">
+          <Key>
+            <PropertyRef Name="MedfinansiarID" />
+            <PropertyRef Name="ProjektID" />
+          </Key>
+          <Property Name="MedfinansiarID" Type="int" Nullable="false" />
+          <Property Name="ProjektID" Type="int" Nullable="false" />
+          <Property Name="Procentandel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MedverkandeFranHV">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fornamn" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Efternamn" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MedverkandeFranHVProjekt">
+          <Key>
+            <PropertyRef Name="MedverkandeFranHVId" />
+            <PropertyRef Name="ProjektId" />
+          </Key>
+          <Property Name="MedverkandeFranHVId" Type="int" Nullable="false" />
+          <Property Name="ProjektId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nyckelord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Namn" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NyckelordProjekt">
+          <Key>
+            <PropertyRef Name="NyckelordId" />
+            <PropertyRef Name="ProjektId" />
+          </Key>
+          <Property Name="NyckelordId" Type="int" Nullable="false" />
+          <Property Name="ProjektId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Projekt">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Projektnamn" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Beskrivning" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Starttid" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Sluttid" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Huvudansvarig" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Diarienummer" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SoktBelopp" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Huvudfinansiar" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Projekttyp" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Projektstatus" Type="int" Nullable="false" />
+          <Property Name="Beviljat" Type="bit" Nullable="false" />
+          <Property Name="HVSomHuvudansvarig" Type="bit" Nullable="false" />
+          <Property Name="Kommuniceringsstatus" Type="int" Nullable="false" />
+          <Property Name="TillagdAv" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_MedfinansiarProjekt_Medfinansiar">
+          <End Role="Medfinansiar" Type="Self.Medfinansiar" Multiplicity="1" />
+          <End Role="MedfinansiarProjekt" Type="Self.MedfinansiarProjekt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medfinansiar">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MedfinansiarProjekt">
+              <PropertyRef Name="MedfinansiarID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedfinansiarProjekt_Projekt">
+          <End Role="Projekt" Type="Self.Projekt" Multiplicity="1" />
+          <End Role="MedfinansiarProjekt" Type="Self.MedfinansiarProjekt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projekt">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MedfinansiarProjekt">
+              <PropertyRef Name="ProjektID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedverkandeFranHVProjekt_MedverkandeFranHV">
+          <End Role="MedverkandeFranHV" Type="Self.MedverkandeFranHV" Multiplicity="1" />
+          <End Role="MedverkandeFranHVProjekt" Type="Self.MedverkandeFranHVProjekt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MedverkandeFranHV">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MedverkandeFranHVProjekt">
+              <PropertyRef Name="MedverkandeFranHVId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedverkandeFranHVProjekt_Projekt">
+          <End Role="Projekt" Type="Self.Projekt" Multiplicity="1" />
+          <End Role="MedverkandeFranHVProjekt" Type="Self.MedverkandeFranHVProjekt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projekt">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MedverkandeFranHVProjekt">
+              <PropertyRef Name="ProjektId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NyckelordProjekt_Nyckelord">
+          <End Role="Nyckelord" Type="Self.Nyckelord" Multiplicity="1" />
+          <End Role="NyckelordProjekt" Type="Self.NyckelordProjekt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nyckelord">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="NyckelordProjekt">
+              <PropertyRef Name="NyckelordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NyckelordProjekt_Projekt">
+          <End Role="Projekt" Type="Self.Projekt" Multiplicity="1" />
+          <End Role="NyckelordProjekt" Type="Self.NyckelordProjekt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projekt">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="NyckelordProjekt">
+              <PropertyRef Name="ProjektId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LINAsDatabasModelStoreContainer">
+          <EntitySet Name="Medfinansiar" EntityType="Self.Medfinansiar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MedfinansiarProjekt" EntityType="Self.MedfinansiarProjekt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MedverkandeFranHV" EntityType="Self.MedverkandeFranHV" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MedverkandeFranHVProjekt" EntityType="Self.MedverkandeFranHVProjekt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Nyckelord" EntityType="Self.Nyckelord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NyckelordProjekt" EntityType="Self.NyckelordProjekt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Projekt" EntityType="Self.Projekt" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_MedfinansiarProjekt_Medfinansiar" Association="Self.FK_MedfinansiarProjekt_Medfinansiar">
+            <End Role="Medfinansiar" EntitySet="Medfinansiar" />
+            <End Role="MedfinansiarProjekt" EntitySet="MedfinansiarProjekt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedfinansiarProjekt_Projekt" Association="Self.FK_MedfinansiarProjekt_Projekt">
+            <End Role="Projekt" EntitySet="Projekt" />
+            <End Role="MedfinansiarProjekt" EntitySet="MedfinansiarProjekt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedverkandeFranHVProjekt_MedverkandeFranHV" Association="Self.FK_MedverkandeFranHVProjekt_MedverkandeFranHV">
+            <End Role="MedverkandeFranHV" EntitySet="MedverkandeFranHV" />
+            <End Role="MedverkandeFranHVProjekt" EntitySet="MedverkandeFranHVProjekt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedverkandeFranHVProjekt_Projekt" Association="Self.FK_MedverkandeFranHVProjekt_Projekt">
+            <End Role="Projekt" EntitySet="Projekt" />
+            <End Role="MedverkandeFranHVProjekt" EntitySet="MedverkandeFranHVProjekt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NyckelordProjekt_Nyckelord" Association="Self.FK_NyckelordProjekt_Nyckelord">
+            <End Role="Nyckelord" EntitySet="Nyckelord" />
+            <End Role="NyckelordProjekt" EntitySet="NyckelordProjekt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NyckelordProjekt_Projekt" Association="Self.FK_NyckelordProjekt_Projekt">
+            <End Role="Projekt" EntitySet="Projekt" />
+            <End Role="NyckelordProjekt" EntitySet="NyckelordProjekt" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LINAsDatabasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Medfinansiar">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Namn" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MedfinansiarProjekt" Relationship="Self.FK_MedfinansiarProjekt_Medfinansiar" FromRole="Medfinansiar" ToRole="MedfinansiarProjekt" />
+        </EntityType>
+        <EntityType Name="MedfinansiarProjekt">
+          <Key>
+            <PropertyRef Name="MedfinansiarID" />
+            <PropertyRef Name="ProjektID" />
+          </Key>
+          <Property Name="MedfinansiarID" Type="Int32" Nullable="false" />
+          <Property Name="ProjektID" Type="Int32" Nullable="false" />
+          <Property Name="Procentandel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Medfinansiar" Relationship="Self.FK_MedfinansiarProjekt_Medfinansiar" FromRole="MedfinansiarProjekt" ToRole="Medfinansiar" />
+          <NavigationProperty Name="Projekt" Relationship="Self.FK_MedfinansiarProjekt_Projekt" FromRole="MedfinansiarProjekt" ToRole="Projekt" />
+        </EntityType>
+        <EntityType Name="MedverkandeFranHV">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fornamn" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Efternamn" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Projekt" Relationship="Self.MedverkandeFranHVProjekt" FromRole="MedverkandeFranHV" ToRole="Projekt" />
+        </EntityType>
+        <EntityType Name="Nyckelord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Namn" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Projekt" Relationship="Self.NyckelordProjekt" FromRole="Nyckelord" ToRole="Projekt" />
+        </EntityType>
+        <EntityType Name="Projekt">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Projektnamn" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Beskrivning" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Starttid" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Sluttid" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Huvudansvarig" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Diarienummer" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SoktBelopp" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Huvudfinansiar" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Projekttyp" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Projektstatus" Type="Int32" Nullable="false" />
+          <Property Name="Beviljat" Type="Boolean" Nullable="false" />
+          <Property Name="HVSomHuvudansvarig" Type="Boolean" Nullable="false" />
+          <Property Name="Kommuniceringsstatus" Type="Int32" Nullable="false" />
+          <Property Name="TillagdAv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MedfinansiarProjekt" Relationship="Self.FK_MedfinansiarProjekt_Projekt" FromRole="Projekt" ToRole="MedfinansiarProjekt" />
+          <NavigationProperty Name="MedverkandeFranHV" Relationship="Self.MedverkandeFranHVProjekt" FromRole="Projekt" ToRole="MedverkandeFranHV" />
+          <NavigationProperty Name="Nyckelord" Relationship="Self.NyckelordProjekt" FromRole="Projekt" ToRole="Nyckelord" />
+        </EntityType>
+        <Association Name="FK_MedfinansiarProjekt_Medfinansiar">
+          <End Role="Medfinansiar" Type="Self.Medfinansiar" Multiplicity="1" />
+          <End Role="MedfinansiarProjekt" Type="Self.MedfinansiarProjekt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medfinansiar">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MedfinansiarProjekt">
+              <PropertyRef Name="MedfinansiarID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MedfinansiarProjekt_Projekt">
+          <End Role="Projekt" Type="Self.Projekt" Multiplicity="1" />
+          <End Role="MedfinansiarProjekt" Type="Self.MedfinansiarProjekt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projekt">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MedfinansiarProjekt">
+              <PropertyRef Name="ProjektID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MedverkandeFranHVProjekt">
+          <End Role="MedverkandeFranHV" Type="Self.MedverkandeFranHV" Multiplicity="*" />
+          <End Role="Projekt" Type="Self.Projekt" Multiplicity="*" />
+        </Association>
+        <Association Name="NyckelordProjekt">
+          <End Role="Nyckelord" Type="Self.Nyckelord" Multiplicity="*" />
+          <End Role="Projekt" Type="Self.Projekt" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="LINAsDatabasEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Medfinansiar" EntityType="Self.Medfinansiar" />
+          <EntitySet Name="MedfinansiarProjekt" EntityType="Self.MedfinansiarProjekt" />
+          <EntitySet Name="MedverkandeFranHV" EntityType="Self.MedverkandeFranHV" />
+          <EntitySet Name="Nyckelord" EntityType="Self.Nyckelord" />
+          <EntitySet Name="Projekt" EntityType="Self.Projekt" />
+          <AssociationSet Name="FK_MedfinansiarProjekt_Medfinansiar" Association="Self.FK_MedfinansiarProjekt_Medfinansiar">
+            <End Role="Medfinansiar" EntitySet="Medfinansiar" />
+            <End Role="MedfinansiarProjekt" EntitySet="MedfinansiarProjekt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MedfinansiarProjekt_Projekt" Association="Self.FK_MedfinansiarProjekt_Projekt">
+            <End Role="Projekt" EntitySet="Projekt" />
+            <End Role="MedfinansiarProjekt" EntitySet="MedfinansiarProjekt" />
+          </AssociationSet>
+          <AssociationSet Name="MedverkandeFranHVProjekt" Association="Self.MedverkandeFranHVProjekt">
+            <End Role="MedverkandeFranHV" EntitySet="MedverkandeFranHV" />
+            <End Role="Projekt" EntitySet="Projekt" />
+          </AssociationSet>
+          <AssociationSet Name="NyckelordProjekt" Association="Self.NyckelordProjekt">
+            <End Role="Nyckelord" EntitySet="Nyckelord" />
+            <End Role="Projekt" EntitySet="Projekt" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LINAsDatabasModelStoreContainer" CdmEntityContainer="LINAsDatabasEntities1">
+          <EntitySetMapping Name="Medfinansiar">
+            <EntityTypeMapping TypeName="LINAsDatabasModel.Medfinansiar">
+              <MappingFragment StoreEntitySet="Medfinansiar">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Namn" ColumnName="Namn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MedfinansiarProjekt">
+            <EntityTypeMapping TypeName="LINAsDatabasModel.MedfinansiarProjekt">
+              <MappingFragment StoreEntitySet="MedfinansiarProjekt">
+                <ScalarProperty Name="MedfinansiarID" ColumnName="MedfinansiarID" />
+                <ScalarProperty Name="ProjektID" ColumnName="ProjektID" />
+                <ScalarProperty Name="Procentandel" ColumnName="Procentandel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MedverkandeFranHV">
+            <EntityTypeMapping TypeName="LINAsDatabasModel.MedverkandeFranHV">
+              <MappingFragment StoreEntitySet="MedverkandeFranHV">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Fornamn" ColumnName="Fornamn" />
+                <ScalarProperty Name="Efternamn" ColumnName="Efternamn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Nyckelord">
+            <EntityTypeMapping TypeName="LINAsDatabasModel.Nyckelord">
+              <MappingFragment StoreEntitySet="Nyckelord">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Namn" ColumnName="Namn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projekt">
+            <EntityTypeMapping TypeName="LINAsDatabasModel.Projekt">
+              <MappingFragment StoreEntitySet="Projekt">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Projektnamn" ColumnName="Projektnamn" />
+                <ScalarProperty Name="Beskrivning" ColumnName="Beskrivning" />
+                <ScalarProperty Name="Starttid" ColumnName="Starttid" />
+                <ScalarProperty Name="Sluttid" ColumnName="Sluttid" />
+                <ScalarProperty Name="Huvudansvarig" ColumnName="Huvudansvarig" />
+                <ScalarProperty Name="Diarienummer" ColumnName="Diarienummer" />
+                <ScalarProperty Name="SoktBelopp" ColumnName="SoktBelopp" />
+                <ScalarProperty Name="Huvudfinansiar" ColumnName="Huvudfinansiar" />
+                <ScalarProperty Name="Projekttyp" ColumnName="Projekttyp" />
+                <ScalarProperty Name="Projektstatus" ColumnName="Projektstatus" />
+                <ScalarProperty Name="Beviljat" ColumnName="Beviljat" />
+                <ScalarProperty Name="HVSomHuvudansvarig" ColumnName="HVSomHuvudansvarig" />
+                <ScalarProperty Name="Kommuniceringsstatus" ColumnName="Kommuniceringsstatus" />
+                <ScalarProperty Name="TillagdAv" ColumnName="TillagdAv" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="MedverkandeFranHVProjekt" TypeName="LINAsDatabasModel.MedverkandeFranHVProjekt" StoreEntitySet="MedverkandeFranHVProjekt">
+            <EndProperty Name="MedverkandeFranHV">
+              <ScalarProperty Name="ID" ColumnName="MedverkandeFranHVId" />
+            </EndProperty>
+            <EndProperty Name="Projekt">
+              <ScalarProperty Name="ID" ColumnName="ProjektId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="NyckelordProjekt" TypeName="LINAsDatabasModel.NyckelordProjekt" StoreEntitySet="NyckelordProjekt">
+            <EndProperty Name="Nyckelord">
+              <ScalarProperty Name="ID" ColumnName="NyckelordId" />
+            </EndProperty>
+            <EndProperty Name="Projekt">
+              <ScalarProperty Name="ID" ColumnName="ProjektId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

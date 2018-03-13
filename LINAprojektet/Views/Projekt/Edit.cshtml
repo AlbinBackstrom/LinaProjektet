@@ -1,0 +1,250 @@
+﻿@model LINAprojektet.Projekt
+
+@{
+    List<SelectListItem> kommuniceringsLista = new List<SelectListItem>();
+    List<SelectListItem> projektstatusLista = new List<SelectListItem>();
+    List<SelectListItem> projekttypsLista = new List<SelectListItem>();
+    kommuniceringsLista.Add(new SelectListItem
+
+    {
+        Text = "Ej kommunicerat",
+        Value = "1"
+    });
+    kommuniceringsLista.Add(new SelectListItem
+    {
+        Text = "Ekonom",
+        Value = "2"
+    });
+    kommuniceringsLista.Add(new SelectListItem
+    {
+        Text = "Prefekt",
+        Value = "3"
+    });
+    kommuniceringsLista.Add(new SelectListItem
+    {
+        Text = "Rektor",
+        Value = "4"
+    });
+
+    projektstatusLista.Add(new SelectListItem
+    {
+        Text = "Ej påbörjat",
+        Value = "1"
+    });
+    projektstatusLista.Add(new SelectListItem
+    {
+        Text = "Pågående",
+        Value = "2"
+    });
+    projektstatusLista.Add(new SelectListItem
+    {
+        Text = "Avslutat",
+        Value = "3"
+    });
+    projekttypsLista.Add(new SelectListItem {
+        Text = "Utveckling",
+        Value = "1"
+    });
+    projekttypsLista.Add(new SelectListItem
+    {
+        Text = "Forskning",
+        Value = "2"
+    });
+    projekttypsLista.Add(new SelectListItem
+    {
+        Text = "Utredning",
+        Value = "3"
+    });
+    projekttypsLista.Add(new SelectListItem
+    {
+        Text = "Följeforskning",
+        Value = "4"
+    }); projekttypsLista.Add(new SelectListItem
+    {
+        Text = "Annat",
+        Value = "5"
+    });
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+
+    
+    @* jQuery script som sätter en date-picker på de element som har klassen .date-picker  *@
+    <script type='text/javascript'>
+    $(function(){
+        $('.date-picker').datepicker({
+            constrainInput: true,   // prevent letters in the input field
+            minDate: new Date(),    // prevent selection of date older than today
+            autoSize: true,         // automatically resize the input field
+            firstDay: 1, // Start with Monday
+            dateFormat: 'yy-mm-dd'
+
+        });
+    })
+    </script>
+
+    
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+
+
+            @* Projektinformation *@
+            <div class="form-horizontal">
+                <h3>Uppdatera projektinformation</h3>
+                <hr />
+
+                <div class="projektinformation col-md-4">
+                    <h3>Projektinformation</h3>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.ID)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Projektnamn, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Projektnamn, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Projektnamn, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Beskrivning, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.Beskrivning, 4, 4, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Beskrivning, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Startdatum", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Starttid, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                            @Html.ValidationMessageFor(model => model.Starttid, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Slutdatum", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Sluttid, new { htmlAttributes = new { @class = "form-control date-picker" } })
+                            @Html.ValidationMessageFor(model => model.Sluttid, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Diarienummer, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Diarienummer, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Diarienummer, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Projekttyp, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.Projekttyp, projekttypsLista, "-- Välj typ --", new { @class = "form-control dropdown-toggle" } )
+                            @Html.ValidationMessageFor(model => model.Projekttyp, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Projektstatus, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.Projektstatus, projektstatusLista, "-- Välj status --", new { @class = "form-control dropdown-toggle" })
+                            @Html.ValidationMessageFor(model => model.Projektstatus, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Beviljat, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.Beviljat)
+                                @Html.ValidationMessageFor(model => model.Beviljat, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Är HV huvudansvariga?", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.HVSomHuvudansvarig)
+                                @Html.ValidationMessageFor(model => model.HVSomHuvudansvarig, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Kommuniceringsstatus, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.Kommuniceringsstatus, kommuniceringsLista, new { @class = "form-control dropdown-toggle" })
+                            @Html.ValidationMessageFor(model => model.Kommuniceringsstatus, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="personal col-md-4">
+                    <h3>Personal</h3>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Huvudansvarig, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Huvudansvarig, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Huvudansvarig, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ekonomi  col-md-4">
+                    <h3>Ekonomi</h3>
+                    <div class="form-group">
+                        @Html.Label("Huvudfinansiär", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Huvudfinansiar, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Huvudfinansiar, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Sökt belopp", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.SoktBelopp, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SoktBelopp, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-6 col-md-10">
+                            <input type="submit" value="Spara" class="btn btn-primary" />
+                        </div>
+                    </div>
+                    <div>
+                        @Html.ActionLink("Tillbaka till detaljer", "Details", new { id = Model.ID }) |
+                        @Html.ActionLink("Tillbaka till projekt", "Index")
+                        @if (ViewBag.seeIfAdmin == true)
+                        {
+                            @Html.Name(" | ")
+                            @Html.ActionLink("Ta bort projekt", "Delete", new { id = Model.ID })
+                        }
+
+                    </div>
+                </div>
+
+                    
+                </div>
+        </div>
+    }
+    
+    
+</body>
+</html>

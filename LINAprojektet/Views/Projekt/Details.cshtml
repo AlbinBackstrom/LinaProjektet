@@ -1,0 +1,184 @@
+﻿@model LINAprojektet.Projekt
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h3>Projekt</h3>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Projektnamn)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Projektnamn)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Beskrivning)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Beskrivning)
+            </dd>
+    
+            <dt>
+                @Html.DisplayName("Startdatum")
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Starttid)
+            </dd>
+    
+            <dt>
+                @Html.DisplayName("Slutdatum")
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Sluttid)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Huvudansvarig)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Huvudansvarig)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Diarienummer)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Diarienummer)
+            </dd>
+    
+            <dt>
+                @Html.DisplayName("Sökt belopp")
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.SoktBelopp)
+            </dd>
+    
+            <dt>
+                @Html.DisplayName("Huvudfinansiär")
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Huvudfinansiar)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Projekttyp)
+            </dt>
+    
+            <dd>
+                @switch (Model.Projekttyp)
+                {
+                    case "1":
+                        @Html.Name("Utveckling")
+                        break;
+                    case "2":
+                        @Html.Name("Forskning")
+                        break;
+                    case "3":
+                        @Html.Name("Utredning")
+                        break;
+                    case "4":
+                        @Html.Name("Följeforskning")
+                        break;
+                    case "5":
+                        @Html.Name("Annat")
+                        break;
+                }
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Projektstatus)
+            </dt>
+    
+            <dd>
+                @if (Model.Projektstatus == 1)
+                {
+                    @Html.Name("Ej påbörjat")
+                }
+                else if (Model.Projektstatus == 2)
+                {
+                    @Html.Name("Påbörjat")
+                }
+                else if (Model.Projektstatus == 3)
+                {
+                    @Html.Name("Avslutat")
+                }
+
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Beviljat)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Beviljat)
+            </dd>
+    
+            <dt>
+                @Html.DisplayName("Är HV huvudansvariga?")
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.HVSomHuvudansvarig)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Kommuniceringsstatus)
+            </dt>
+    
+            <dd>
+                @if (Model.Kommuniceringsstatus == 1)
+                {
+                    @Html.Name("Ej kommunicerat");
+                }
+                else if (Model.Kommuniceringsstatus == 2)
+                {
+                    @Html.Name("Ekonom")
+                }
+                else if (Model.Kommuniceringsstatus == 3)
+                {
+                    @Html.Name("Prefekt")
+                }
+                else
+                {
+                    @Html.Name("Rektor")
+                }
+
+            </dd>
+
+            <dt>
+                @Html.DisplayName("Tillagd av")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TillagdAv)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Ändra uppgifter", "Edit", new { id = Model.ID }) |
+        @Html.ActionLink("Tillbaka till projekt", "Index")
+        @if (ViewBag.seeIfAdmin == true)
+        {
+            @Html.Name(" | ")
+            @Html.ActionLink("Ta bort projekt", "Delete", new { id = Model.ID })
+        }
+    </p>
+</body>
+</html>

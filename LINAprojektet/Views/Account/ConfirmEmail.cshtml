@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "Bekräfta epostadress";
+}
+
+<h2>@ViewBag.Title.</h2>
+<div>
+    <p>
+        Tack för din bekräftelse. Vänligen @Html.ActionLink("klicka här för att logga in.", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+    </p>
+</div>
