@@ -11,7 +11,7 @@ Syftet med projektet är att underlätta för dels projektdeltagare att mata in 
 Målet med projektet är att skapa en plattform där all information om aktuella projekt samlas. Plattformen ska ha två nivåer av användarrättigheter. I den första nivån ska användare först kunna registrera ett konto och sedan använda det kontot för att mata in uppgifter om sitt projekt. Användare ska sedan även kunna ändra uppgifterna. I den andra nivån ska det räcka med samma inloggningsuppgifter för alla användare. Här ska de till att börja med få upp information om alla projekten som finns i databasen. Senare, i mån av tid, ska användare även kunna söka och sortera bland uppgifterna.
 
 
-#### Teknisk specifikation
+### Teknisk specifikation
 Utvecklingen i projektet kommer ske i .NET då det är denna teknik gruppen anser sig kunna bäst. .NET-ramverket är Microsofts utvecklingsplattform.  
 
 Användargränssnittet kommer programmeras i HTML, CSS, jQuery som är ett JavaScript-bibliotek och C#, ett objektorienterat högnivåspråk som är en del av .NET-plattformen. Gränssnittet kommer byggas på arkitekturmönstret MVC som står för Model View Controller. Genom att använda MCV separeras datalagret (Model) från presentationslagret (View) genom att använda en mellanliggande komponent (Controller). Utvecklingen av användargränssnittet kommer dessutom använda Bootstrap, som är ett annat ramverk som används för att styla webbsidor.    
